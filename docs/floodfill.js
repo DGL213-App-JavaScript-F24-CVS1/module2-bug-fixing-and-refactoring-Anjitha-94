@@ -22,6 +22,7 @@ const CELL_HEIGHT = canvas.height/CELLS_PER_AXIS;
 
 // Game objects
 let grids;
+let history = []; // Array to track previous game states
 let currentPlayer = "X";
 let gameOver = false;
 
@@ -37,6 +38,7 @@ function startGame() {
     render(grids);
     gameOver = false;
     currentPlayer = "X";  // X always starts first
+    history = []; // Reset history on new game
 }
 
 function initializeGrid() {
@@ -111,6 +113,14 @@ function convertCartesiansToGrid(xPos, yPos) {
 
 function restart() {
     startGame(grids[0]);
+}
+function undoLastMove() {
+    if (history.length > 0) { 
+        grids = history.pop(); // Restore the last state from history 
+        currentPlayer = currentPlayer === "X" ? "O" : "X"; // Switch back to the previous player 
+        render(grids); // Re-render the grid with the previous state 
+        gameOver = false; // Allow the game to continue after undo 
+    } 
 }
  // #region Event Listeners
 
