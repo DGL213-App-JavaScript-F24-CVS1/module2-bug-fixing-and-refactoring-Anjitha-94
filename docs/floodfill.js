@@ -66,13 +66,29 @@ function render(grid) {
         }
     }
 }
-function updateGridAt(mousePositionX, mousePositionY) {
-    const gridCoordinates = convertCartesiansToGrid(mousePositionX, mousePositionY);
-    const newGrid = grids[grids.length-1].slice(); 
-    floodFill(newGrid, gridCoordinates, newGrid[gridCoordinates.column * CELLS_PER_AXIS + gridCoordinates.row])
-    grids.push(newGrid);
-    render(grids[grids.length-1]);    
+
+function updateGridAt(mouseX, mouseY) {
+    if (gameOver) return; // Prevent moves after the game is over
+
+    const gridCoordinates = convertCartesiansToGrid(mouseX, mouseY);
+    const index = gridCoordinates.row * CELLS_PER_AXIS + gridCoordinates.column;
+
+    if (grids[index] === "") { // Only mark if the cell is empty
+        grids[index] = currentPlayer;
+        render(grids);
+
+        if (checkWinCondition()) {
+            alert(`${currentPlayer} wins!`);
+            gameOver = true;
+        } else if (grids.every(cell => cell !== "")) {
+            alert("It's a tie!");
+            gameOver = true;
+        } else {
+            currentPlayer = currentPlayer === "X" ? "O" : "X"; // Switch player
+        }
+    }
 }
+
 
 function updatePlayerScore() {
 playerScore = playerScore > 0 ? playerScore -= 1 : 0;
