@@ -31,12 +31,12 @@ let gameOver = false;
 // *****************************************************************************
 // #region Game Logic
 
-function startGame(startingGrid = []) {
-    if (startingGrid.length === 0) {
-        startingGrid = initializeGrid();
-    }
-    initializeHistory(startingGrid);
-    render(grids[0]);
+
+function startGame() {
+    grids = initializeGrid();
+    render(grids);
+    gameOver = false;
+    currentPlayer = "X";  // X always starts first
 }
 
 function initializeGrid() {
