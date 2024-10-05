@@ -47,43 +47,25 @@ function initializeGrid() {
     return newGrid;
 }
 
-function initializeHistory(startingGrid) {
-    grids = [];
-    grids.push(startingGrid);
-}   
-
-function rollBackHistory() {
-    if (grids.length > 0) {
-        grids = grids.slice(0, grids.length-1);
-        render(grids[grids.length-1]);
-    }
-}
-
-function transposeGrid() {
-    for (let i = 0; i < grids.length; i++) {
-    const currentGrid = grids[i];
-    for (let j = 0; j < currentGrid.length; j++) {
-        const currentGridRow = Math.floor(j / CELLS_PER_AXIS);
-        const currentGridColumn = j % CELLS_PER_AXIS;
-        if (currentGridColumn >= currentGridRow) {
-            const tempCellStorage = currentGrid[j];
-            currentGrid[j] = currentGrid[currentGridColumn * CELLS_PER_AXIS + currentGridRow];
-            currentGrid[currentGridColumn * CELLS_PER_AXIS + currentGridRow] = tempCellStorage;
-        }
-    }
-    grids[i] = currentGrid;
-    }
-    render(grids[grids.length-1]);
-}
 
 function render(grid) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas before each render
     for (let i = 0; i < grid.length; i++) {
-        ctx.fillStyle = `rgb(${grid[i][0]}, ${grid[i][0]}, ${grid[i][2]})`;
-        ctx.fillRect((i % CELLS_PER_AXIS) * CELL_WIDTH, Math.floor(i / CELLS_PER_AXIS) * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT);
-    }
-    playerScoreText.textContent = playerScore;
-}
+        const col = i % CELLS_PER_AXIS;
+        const row = Math.floor(i / CELLS_PER_AXIS);
+        const xPos = col * CELL_WIDTH;
+        const yPos = row * CELL_HEIGHT;
 
+        ctx.strokeStyle = "black";
+        ctx.strokeRect(xPos, yPos, CELL_WIDTH, CELL_HEIGHT);
+
+        // Draw X or O
+        if (grid[i]) {
+            ctx.font = "48px Arial";
+            ctx.fillText(grid[i], xPos + CELL_WIDTH / 3, yPos + CELL_HEIGHT / 1.5);
+        }
+    }
+}
 function updateGridAt(mousePositionX, mousePositionY) {
     const gridCoordinates = convertCartesiansToGrid(mousePositionX, mousePositionY);
     const newGrid = grids[grids.length-1].slice(); 
