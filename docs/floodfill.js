@@ -2,6 +2,7 @@
 
 (() => {
 window.addEventListener("load", (event) => {
+    console.log(event);
 // *****************************************************************************
 // #region Constants and Variables
 
