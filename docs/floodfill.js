@@ -101,12 +101,28 @@ function checkWinCondition() {
             grids[pattern[1]] === grids[pattern[2]];
     });
 }
-
+function convertCartesiansToGrid(xPos, yPos) {
+    return {
+        column: Math.floor(xPos / CELL_WIDTH),
+        row: Math.floor(yPos / CELL_HEIGHT)
+    };
+}
 
 
 function restart() {
     startGame(grids[0]);
 }
+ // #region Event Listeners
+
+ canvas.addEventListener("mousedown", (event) => {
+    updateGridAt(event.offsetX, event.offsetY);
+});
+
+restartButton.addEventListener("mousedown", restart);
+
+undoButton.addEventListener("mousedown", undoLastMove);
+
+// #endregion
 
 
 //Start game
