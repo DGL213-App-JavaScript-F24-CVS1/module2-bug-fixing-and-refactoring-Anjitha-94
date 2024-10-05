@@ -13,27 +13,17 @@ const ctx = canvas.getContext("2d");
 // UI references
 const restartButton = document.querySelector("#restart");
 const undoButton = document.querySelector('#undo');
-const rotateButton = document.querySelector('#rotate');
-const colorSelectButtons = document.querySelectorAll(".color-select");
-const playerScoreText = document.querySelector('#score-text'); 
 
 // Constants
-const CELL_COLORS = {
-    white: [255, 255, 255],
-    black: [0, 0, 0],
-    red: [255, 0, 0],
-    green: [0, 255, 0], 
-    blue: [0, 0, 255]
-}
-const CELLS_PER_AXIS = 9;
+const CELLS_PER_AXIS = 3;
 const CELL_WIDTH = canvas.width/CELLS_PER_AXIS;
 const CELL_HEIGHT = canvas.height/CELLS_PER_AXIS;
-const MAXIMUM_SCORE = CELLS_PER_AXIS * CELLS_PER_AXIS;;
+
 
 // Game objects
-let replacementColor = CELL_COLORS.white;
 let grids;
-let playerScore = MAXIMUM_SCORE;
+let currentPlayer = "X";
+let gameOver = false;
 
 // #endregion
 
