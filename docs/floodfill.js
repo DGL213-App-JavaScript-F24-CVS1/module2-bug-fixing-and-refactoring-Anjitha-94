@@ -42,7 +42,7 @@ function startGame() {
 function initializeGrid() {
     const newGrid = [];
     for (let i = 0; i < CELLS_PER_AXIS * CELLS_PER_AXIS; i++) {
-        newGrid.push(chooseRandomPropertyFrom(CELL_COLORS));
+        newGrid.push("");
     }
     return newGrid;
 }
