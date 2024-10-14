@@ -76,6 +76,9 @@ function updateGridAt(mouseX, mouseY) {
     const index = gridCoordinates.row * CELLS_PER_AXIS + gridCoordinates.column;
 
     if (grids[index] === "") { // Only mark if the cell is empty
+        // Store the current grid state before making the move
+        lastMove = grids.slice();  // Save a copy of the current grid before the move
+
         grids[index] = currentPlayer;
         render(grids);
 
